@@ -11,12 +11,8 @@
         <router-link to="/about">О нас</router-link>
       </li>
       <li class="navitem">
-        <router-link to="/delivery">Доставка</router-link>
-      </li>
-      <li class="navitem">
-        <router-link to="/cart">
+        <router-link to="/cart" style="font-weight: 500;">
           Корзина
-          <i class="bi bi-cart"></i>
         </router-link>
       </li>
     </ul>
@@ -36,9 +32,6 @@
         </li>
         <li class="navitem" @click="closeSidebar">
           <router-link to="/about">О нас</router-link>
-        </li>
-        <li class="navitem" @click="closeSidebar">
-          <router-link to="/delivery">Доставка</router-link>
         </li>
         <li class="navitem" @click="closeSidebar">
           <router-link to="/cart">
@@ -75,6 +68,8 @@ header {
   width: 100%;
   display: flex;
   flex-direction: row;
+
+  margin-bottom: 32px;
 
   justify-content: space-between;
   align-items: center;

@@ -26,8 +26,9 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue'
+import { defineProps, onMounted, defineEmits } from 'vue'
 
+const emit = defineEmits(['add-to-cart'])
 const props = defineProps({
   id: Number,
   images: String,
@@ -42,7 +43,7 @@ onMounted(() => {
 })
 
 function addToCart() {
-  console.log(`addToCart ${props.id}`);
+  emit('add-to-cart', props.id)
 }
 
 </script>

@@ -8,13 +8,13 @@
         <a href="tel:+77770803003">+7 777 080 3003</a>
         <a href="mailto:suvenirka@artpool.kz">suvenirka@artpool.kz</a>
         <div class="social">
-          <a href="https://www.instagram.com">
+          <a href="https://www.instagram.com/suvenirka_ala/" target="_blank">
             <i class="bi bi-instagram"></i>
           </a>
-          <a href="https://www.whatsapp.com">
+          <a href="https://wa.me/77770804004" target="_blank">
             <i class="bi bi-whatsapp"></i>
           </a>
-          <a href="https://www.youtube.com/">
+          <a href="https://www.youtube.com/@suveniryalmaty" target="_blank">
             <i class="bi bi-youtube"></i>
           </a>
         </div>

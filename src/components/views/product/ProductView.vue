@@ -55,6 +55,7 @@ import apiService from '@/services/apiService';
 
 const product = ref({});
 
+const cart = ref(JSON.parse(localStorage.getItem('cart')) || []);
 const id = useRoute().params.id;
 
 onMounted(async () => {
@@ -75,6 +76,17 @@ const formatPrice = (price) => {
   }
 };
 
+const addToCart = () => {
+  if (product.value ) {
+    const cartItem = cart.value.find(item => item._id === product.value._id);
+    if (cartItem) {
+      cartItem.quantity += 1;
+    } else {
+      cart.value.push({ ...product.value, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart.value));
+  }
+};
 
 </script>
 

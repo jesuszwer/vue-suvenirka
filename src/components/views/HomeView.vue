@@ -8,7 +8,7 @@
     <div class="new-carousel">
       <template v-if="products.length">
         <ProductCard v-for="product in products" :key="product.id" :id="product._id" :name="product.name"
-          :price="product.price" :oldprice="product.oldprice" :images="product.images" />
+          :price="product.price" :oldprice="product.oldprice" :images="product.images" @add-to-cart="addToCart" />
       </template>
       <template v-else>
         <p>Товаров нет</p>
@@ -42,11 +42,11 @@ import apiService from '@/services/apiService';
 
 const products = ref([]);
 const categories = ref([]);
+const cart = ref([])
 
 onMounted(async () => {
   try {
     const response = await apiService.get('/api/product');
-    // Предполагается, что дата добавления продукта хранится в поле 'createdAt'
     products.value = response.data
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, 4);
@@ -65,33 +65,48 @@ onMounted(async () => {
 
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  const carusel = document.querySelector('.hits-carusel');
-  const prevBtn = document.querySelector('.prev_btn');
-  const nextBtn = document.querySelector('.next_btn');
-
-  const item = carusel.querySelectorAll('.carusel_item');
-  const itemWidth = item[0].offsetWidth;
-  let currentIndex = 0;
-  let translateX = 0;
-
-  prevBtn.addEventListener('click', function () {
-    if (currentIndex > 0) {
-      currentIndex--;
-      translateX += itemWidth;
-      carusel.style.transform = `translateX(${translateX}px)`;
+const addToCart = (productId) => {
+  const product = products.value.find(p => p._id === productId);
+  console.log(product);
+  if (product) {
+    const cartItem = cart.value.find(item => item._id === productId);
+    console.log(cartItem);
+    if (cartItem) {
+      cartItem.quantity += 1;
+    } else {
+      cart.value.push({ ...product, quantity: 1 });
     }
-  });
+    localStorage.setItem('cart', JSON.stringify(cart.value));
+  }
+};
 
-  nextBtn.addEventListener('click', function () {
-    if (currentIndex < item.length - 1) {
-      currentIndex++;
-      translateX -= itemWidth;
-      carusel.style.transform = `translateX(${translateX}px)`;
-    }
-  });
+// document.addEventListener('DOMContentLoaded', function () {
+//   const carusel = document.querySelector('.hits-carusel');
+//   const prevBtn = document.querySelector('.prev_btn');
+//   const nextBtn = document.querySelector('.next_btn');
 
-})
+//   const item = carusel.querySelectorAll('.carusel_item');
+//   const itemWidth = item[0].offsetWidth;
+//   let currentIndex = 0;
+//   let translateX = 0;
+
+//   prevBtn.addEventListener('click', function () {
+//     if (currentIndex > 0) {
+//       currentIndex--;
+//       translateX += itemWidth;
+//       carusel.style.transform = `translateX(${translateX}px)`;
+//     }
+//   });
+
+//   nextBtn.addEventListener('click', function () {
+//     if (currentIndex < item.length - 1) {
+//       currentIndex++;
+//       translateX -= itemWidth;
+//       carusel.style.transform = `translateX(${translateX}px)`;
+//     }
+//   });
+
+// })
 
 </script>
 

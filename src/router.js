@@ -11,8 +11,10 @@ const router = createRouter({
       { path: '/catalog/:category', component: () => import('./components/views/catalog/CatalogView.vue') },
       { path: '/product/:id', component: () => import('./components/views/product/ProductView.vue') },
 
+      { path: '/cart', component: () => import('./components/views/other/CartView.vue') },
       { path: '/admin', component: () => import('./components/views/admin/IndexView.vue') },
 
+      { path: '/test', component: () => import('./components/views/TestView.vue') },
       { path: '/:pathMatch(.*)*', component: () => import('./components/views/NotFound.vue') }
   ]
 })

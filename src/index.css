@@ -10,7 +10,7 @@
 
 section {
   margin-bottom: 44px !important;
-
+  
   &:last-child {
     margin-bottom: 64px !important;
   }

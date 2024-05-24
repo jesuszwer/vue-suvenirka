@@ -42,7 +42,7 @@ import apiService from '@/services/apiService';
 
 const products = ref([]);
 const categories = ref([]);
-const cart = ref([])
+const cart = ref(JSON.parse(localStorage.getItem('cart')) || []);
 
 onMounted(async () => {
   try {

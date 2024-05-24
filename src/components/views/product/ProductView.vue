@@ -12,7 +12,7 @@
           <h2>{{ product.name }}</h2>
           <p>{{ product.description }}</p>
           <div class="color">
-            <div v-if="product.color" class="color-circle" :style="{ backgroundColor: product.color }"></div>
+            <div v-if="product.color" class="color-circle" :style="{ backgroundColor: color() }"></div>
             <!-- <p v-if="product.color">{{ product.color }}</p> -->
           </div>
         </div>
@@ -87,6 +87,25 @@ const addToCart = () => {
     localStorage.setItem('cart', JSON.stringify(cart.value));
   }
 };
+
+const color = (() => {
+  switch (product.value.color) {
+    case 'Белый': return '#FFFFFF';
+    case 'Черный': return '#000000';
+    case 'Красный': return '#FF0000';
+    case 'Зелый': return '#00FF00';
+    case 'Синий': return '#0000FF';
+    case 'Фиолетовый': return '#FF00FF';
+    case 'Желтый': return '#FFFF00';
+    case 'Оранжевый': return '#808080';
+    case 'Розовый': return '#FFC0CB';
+    case 'Серый': return '#808080';
+    case 'Бежевый': return '#C0C0C0';
+    case 'Коричневый': return '#808000';
+    case 'Бюзовый': return '#808000';
+    default: return 'none';
+  }
+})
 
 </script>
 

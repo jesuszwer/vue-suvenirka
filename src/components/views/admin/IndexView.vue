@@ -1,37 +1,51 @@
 <template>
-  <h2>Панель менеджера</h2>
-  <form ref="myForm" @submit.prevent="handleSubmit">
-    <label for="name">Название продукта: </label>
-    <input type="text" name="name" id="name"><br><br>
+  <section>
+    <h2>Панель менеджера</h2>
+    <form ref="myForm" @submit.prevent="handleSubmit" id="myForm">
+      <label for="name">Название продукта: </label>
+      <input type="text" name="name" id="name" value="" min="3" max="255" placeholder="Название продукта" required>
 
-    <label for="description">Описание продукта: </label>
-    <input type="textarea" id="description" name="description" required><br><br>
+      <label for="description">Описание продукта: </label>
+      <input type="textarea" id="description" name="description" placeholder="Описание продукта" max="500" required>
 
-    <label for="price">Цена: </label>
-    <input type="number" id="price" name="price" required><br><br>
+      <label for="category">Категория: </label>
+      <input type="text" id="category" name="category" placeholder="Категория продукта" min="3" max="500" required>
 
-    <label for="count">Количество: </label>
-    <input type="number" id="count" name="count" required><br><br>
+      <label for="price">Цена: </label>
+      <input type="number" id="price" name="price" placeholder="Цена продукта" min="0" required>
 
-    <label for="category">Категория: </label>
-    <input type="text" id="category" name="category" required><br><br>
+      <label for="color">Цвет: </label>
+      <select name="color" id="color" value="none">
+        <option value="Белый">Белый</option>
+        <option value="Черный">Черный</option>
+        <option value="Красный">Красный</option>
+        <option value="Зеленый">Зеленый</option>
+        <option value="Синий">Синий</option>
+        <option value="Фиолетовый">Фиолетовый</option>
+        <option value="Желтый">Желтый</option>
+        <option value="Оранжевый">Оранжевый</option>
+        <option value="Розовый">Розовый</option>
+        <option value="Серый">Серый</option>
+        <option value="Бежевый">Бежевый</option>
+        <option value="Коричневый">Коричневый</option>
+        <option value="Бирюзовый">Бирюзовый</option>
+        <option value="none">none</option>
+      </select>
 
-    <label for="color">Цвет: </label>
-    <input type="text" id="color" name="color" required><br><br>
+      <label for="images">Image:</label>
+      <input type="file" id="images" name="images" accept="images/*" required>
 
-    <label for="image">Image:</label>
-    <input type="file" id="image" name="image" accept="image/*" required><br><br>
-
-    <button type="">Submit</button>
-  </form>
+      <button type="submit">Сохранить продукт</button>
+    </form>
+  </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import apiService from '@/services/apiService';
+import VueCookies from 'vue-cookies';
 
 const myForm = ref(null);
-let isSubmitHandlerAdded = false;
 
 const handleSubmit = (event) => {
   event.preventDefault(); // Останавливаем отправку формы
@@ -42,7 +56,7 @@ const handleSubmit = (event) => {
   // Преобразуем основные данные формы в JSON
   const jsonData = {};
   formData.forEach((value, key) => {
-    if (key !== 'image') { // Исключаем файл из JSON
+    if (key !== 'images') { // Исключаем файл из JSON
       jsonData[key] = value;
     }
   });
@@ -50,7 +64,7 @@ const handleSubmit = (event) => {
   // Создаем новый объект FormData для отправки
   const dataToSend = new FormData();
   dataToSend.append('data', JSON.stringify(jsonData)); // Добавляем JSON данные
-  dataToSend.append('image', formData.get('image')); // Добавляем изображение
+  dataToSend.append('images', formData.get('images')); // Добавляем изображение
 
   // Отправляем данные на сервер с использованием Axios
   apiService.post('/api/product', dataToSend, {
@@ -60,6 +74,7 @@ const handleSubmit = (event) => {
   })
     .then(response => {
       console.log('Success:', response.data);
+      document.getElementById('myForm').reset(); // Очистка формы
     })
     .catch(error => {
       console.error('Error:', error);
@@ -67,11 +82,72 @@ const handleSubmit = (event) => {
 };
 
 onMounted(() => {
-  if (!isSubmitHandlerAdded) {
-    myForm.value.addEventListener('submit', handleSubmit);
-    isSubmitHandlerAdded = true;
+  if(!VueCookies.get('token')) {
+    window.location.href = '/admin/login';
   }
-});
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="textarea"],
+input[type="number"],
+select,
+input[type="file"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="textarea"] {
+  height: 80px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+</style>

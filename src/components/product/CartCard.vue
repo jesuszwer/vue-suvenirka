@@ -1,14 +1,15 @@
 <template>
+
   <div class="cart-product">
+    <div class="product-image">
+      <img :src="product.images" alt="Product Image">
+    </div>
     <div class="product-info">
       <div class="product-name">{{ product.name }}</div>
       <div class="product-description">{{ product.description }}</div>
       <div class="product-price">{{ formatPrice(product.price) }} тг</div>
       <div class="product-quantity">Количество: {{ product.quantity }}</div>
       <div class="product-final-price">Итого: {{ formatPrice(final_price) }} тг</div>
-    </div>
-    <div class="product-image">
-      <img :src="product.images" alt="Product Image">
     </div>
     <button @click="removeFromCart" class="btn-remove">Удалить</button>
   </div>
@@ -44,54 +45,70 @@ const formatPrice = (price) => {
 };
 </script>
 
+
 <style scoped>
 .cart-product {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 22px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-.product-info {
-  flex: 1;
-}
+.product-image {
+  background-color: #D9D9D9;
+  border-radius: 22px;
 
-.product-name {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.product-description {
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-.product-price {
-  margin-top: 5px;
-  font-size: 16px;
-}
-
-.product-quantity {
-  margin-top: 5px;
-  font-size: 16px;
-}
-
-.product-final-price {
-  margin-top: 5px;
-  font-size: 16px;
+  margin-right: 20px;
 }
 
 .product-image img {
-  width: 100px;
-  height: auto;
-  margin-left: 20px;
+  max-width: 238px;
+  padding: 22px;
+}
+
+.product-info {
+  flex: 1; 
+}
+
+.product-name {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.product-description {
+  font-size: 18px;
+  color: #757575;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.product-quantity,
+.product-final-price {
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .btn-remove {
-  margin-left: 20px;
-  padding: 5px 10px;
-  background-color: red;
-  color: white;
+  padding: 8px 16px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #f44336;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+}
+
+.btn-remove:hover {
+  background-color: #d32f2f;
 }
 </style>

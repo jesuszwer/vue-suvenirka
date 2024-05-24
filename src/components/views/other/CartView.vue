@@ -93,7 +93,8 @@ const handleSubmit = () => {
   };
 
   // Отправка данных на сервер с использованием axios
-  axios.post('http://localhost:3000/telegram', dataToSend) // замените на ваш URL
+  // TODO исправить на деплое
+  axios.post('http://localhost:3000/api/telegram', dataToSend) // замените на ваш URL
     .then(response => {
       console.log('Success:', response.data);
     })

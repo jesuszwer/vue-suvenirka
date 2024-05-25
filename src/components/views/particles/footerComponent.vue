@@ -44,7 +44,7 @@
   flex-direction: row;
   width: 100%;
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 32px 26px;
 }
 
 footer {

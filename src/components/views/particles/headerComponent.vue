@@ -68,6 +68,7 @@ header {
   width: 100%;
   display: flex;
   flex-direction: row;
+  margin-top: 12px;
 
   margin-bottom: 32px;
 

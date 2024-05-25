@@ -2,8 +2,8 @@
   <div class="container">
     <HeaderComponent />
     <router-view></router-view>
+    <FooterComponent />
   </div>
-  <FooterComponent />
 
 </template>
 

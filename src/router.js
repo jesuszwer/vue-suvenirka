@@ -10,6 +10,7 @@ const router = createRouter({
     { path: '/catalog', meta: { title: 'Каталог' }, component: () => import('./components/views/catalog/CatalogList.vue') },
     { path: '/catalog/:category', meta: { title: 'Каталог' }, component: () => import('./components/views/catalog/CatalogView.vue') },
     { path: '/product/:id', meta: { title: 'Товар' }, component: () => import('./components/views/product/ProductView.vue') },
+    { path: '/product/:id/delete', meta: { title: 'Товар' }, component: () => import('./components/views/admin/deleteView.vue') },
 
     { path: '/cart', meta: { title: 'Корзина' }, component: () => import('./components/views/other/CartView.vue') },
 

@@ -32,6 +32,16 @@
         <option value="none">none</option>
       </select>
 
+      <div class="additional-properties" id="additional-properties">
+        <label>Дополнительные характеристики:</label>
+        <div v-for="(property, index) in additionalProperties" :key="index">
+          <input type="text" v-model="property.name" placeholder="Название характеристики" required>
+          <input type="text" v-model="property.value" placeholder="Значение характеристики" required>
+          <button class="remove" type="button" @click="removeProperty(index)">Удалить</button>
+        </div>
+        <button class="add" type="button" @click="addProperty">Добавить характеристику</button>
+      </div>
+
       <label for="images">Image:</label>
       <input type="file" id="images" name="images" accept="images/*" required>
 
@@ -46,6 +56,16 @@ import apiService from '@/services/apiService';
 import VueCookies from 'vue-cookies';
 
 const myForm = ref(null);
+const additionalProperties = ref([{ name: '', value: '' }]);
+
+const addProperty = () => {
+  additionalProperties.value.push({ name: '', value: '' });
+};
+
+const removeProperty = (index) => {
+  additionalProperties.value.splice(index, 1);
+};
+
 
 const handleSubmit = (event) => {
   event.preventDefault(); // Останавливаем отправку формы
@@ -61,6 +81,12 @@ const handleSubmit = (event) => {
     }
   });
 
+  // Преобразуем дополнительные характеристики в объект
+  jsonData.other_properties = {};
+  additionalProperties.value.forEach(property => {
+    jsonData.other_properties[property.name] = property.value;
+  });
+
   // Создаем новый объект FormData для отправки
   const dataToSend = new FormData();
   dataToSend.append('data', JSON.stringify(jsonData)); // Добавляем JSON данные
@@ -74,15 +100,52 @@ const handleSubmit = (event) => {
   })
     .then(response => {
       console.log('Success:', response.data);
-      document.getElementById('myForm').reset(); // Очистка формы
+      myForm.value.reset(); // Очистка формы
+      additionalProperties.value = [{ name: '', value: '' }]; // Очистка дополнительных характеристик
+      alert('Продукт успешно добавлен');
     })
     .catch(error => {
       console.error('Error:', error);
+      alert('Произошла ошибка при добавлении продукта');
     });
 };
 
+// const handleSubmit = (event) => {
+//   event.preventDefault(); // Останавливаем отправку формы
+
+//   // Собираем данные из формы
+//   const formData = new FormData(myForm.value);
+
+//   // Преобразуем основные данные формы в JSON
+//   const jsonData = {};
+//   formData.forEach((value, key) => {
+//     if (key !== 'images') { // Исключаем файл из JSON
+//       jsonData[key] = value;
+//     }
+//   });
+
+//   // Создаем новый объект FormData для отправки
+//   const dataToSend = new FormData();
+//   dataToSend.append('data', JSON.stringify(jsonData)); // Добавляем JSON данные
+//   dataToSend.append('images', formData.get('images')); // Добавляем изображение
+
+//   // Отправляем данные на сервер с использованием Axios
+//   apiService.post('/api/product', dataToSend, {
+//     headers: {
+//       'Content-Type': 'multipart/form-data'
+//     }
+//   })
+//     .then(response => {
+//       console.log('Success:', response.data);
+//       document.getElementById('myForm').reset(); // Очистка формы
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// };
+
 onMounted(() => {
-  if(!VueCookies.get('token')) {
+  if (!VueCookies.get('token')) {
     window.location.href = '/admin/login';
   }
 })
@@ -150,4 +213,38 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+.additional-properties {
+  margin-bottom: 20px; 
+  
+
+  .remove {
+    background-color: rgb(255, 98, 98);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;  
+    margin-bottom: 8px;
+  }
+
+  .remove:hover {
+    background-color: rgb(162, 61, 61);
+  }
+
+  .add {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .add:hover {
+    background-color: #45a049;
+  }
+
+}
+
 </style>

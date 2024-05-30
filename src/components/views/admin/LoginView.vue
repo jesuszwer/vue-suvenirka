@@ -15,7 +15,7 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
-import vuecookies from 'vue-cookies'
+import vuecookies from 'vue-cookies';
 
 export default {
   setup() {

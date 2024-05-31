@@ -11,9 +11,14 @@
         <router-link to="/about">О нас</router-link>
       </li>
       <li class="navitem">
-        <router-link to="/cart" style="font-weight: 500;">
+        <router-link to="/cart">
           Корзина
         </router-link>
+      </li>
+      <li class="navitem">
+        <a href="#contacts">
+          Наши контакты
+        </a>
       </li>
     </ul>
     <div class="contact">
@@ -36,7 +41,11 @@
         <li class="navitem" @click="closeSidebar">
           <router-link to="/cart">
             Корзина
-            <i class="bi bi-cart"></i>
+          </router-link>
+        </li>
+        <li class="navitem" @click="closeSidebar">
+          <router-link to="/cart">
+            Наши контакты
           </router-link>
         </li>
       </ul>
@@ -76,7 +85,8 @@ header {
   align-items: center;
 
   & img {
-    height: 100%;
+    max-width: 125px;
+    max-height: 157px;
   }
 }
 

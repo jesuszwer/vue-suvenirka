@@ -15,6 +15,7 @@ import apiService from '@/services/apiService';
 import ProductCard from '@/components/product/ProductCard.vue';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { toast } from 'vue3-toastify';
 
 // Определяем переменные состояния для хранения данных
 const products = ref([]);
@@ -43,6 +44,7 @@ const addToCart = (productId) => {
       cart.value.push({ ...product, quantity: 1 });
     }
     localStorage.setItem('cart', JSON.stringify(cart.value));
+    toast.success('Товар добавлен в корзину');
   }
 };
 

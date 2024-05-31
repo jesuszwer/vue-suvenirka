@@ -8,8 +8,14 @@
       <div class="product-name">{{ product.name }}</div>
       <div class="product-description">{{ product.description }}</div>
       <div class="product-price">{{ formatPrice(product.price) }} тг</div>
-      <div class="product-quantity">Количество: {{ product.quantity }}</div>
+      <div class="product-quantity">Количество: {{ product.quantity }} шт</div>
       <div class="product-final-price">Итого: {{ formatPrice(final_price) }} тг</div>
+      <hr>
+      <div v-if="product.category === 'Услуги'" class="product-services">
+        <h2>Что будет на обложке?</h2>
+        <label for="service_description">Напишите ваш текст или закрепите файл с вашим логотипом</label>
+        <textarea  id="service_description" name="service_description" placeholder="Описание продукта" min="3" max="500" />
+      </div>
     </div>
     <button @click="removeFromCart" class="btn-remove">Удалить</button>
   </div>
@@ -47,6 +53,33 @@ const formatPrice = (price) => {
 
 
 <style scoped>
+
+.product-services {
+  display: flex;
+  flex-direction: column;
+
+  & h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  & label {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  & textarea {
+    font-size: 18px;
+    margin-bottom: 8px;
+    max-width: 50%;
+    min-width: 50%;
+    min-height: 100px;
+    max-height: 200px;
+  }
+
+}
+
 .cart-product {
   display: flex;
   align-items: center;
@@ -71,7 +104,7 @@ const formatPrice = (price) => {
 }
 
 .product-info {
-  flex: 1; 
+  flex: 1;
 }
 
 .product-name {

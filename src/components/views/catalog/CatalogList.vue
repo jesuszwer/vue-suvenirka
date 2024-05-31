@@ -5,7 +5,7 @@
         :images="category.image" :count="category.count" />
     </template>
     <template v-else>
-      <p>Категорий нет</p>
+      <p class="none">Категорий нет</p>
     </template>
   </section>
 </template>
@@ -31,6 +31,13 @@ onMounted(async () => {
 
 
 <style scoped>
+.none {
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
 .catalog {
   width: 100%;
   display: flex;

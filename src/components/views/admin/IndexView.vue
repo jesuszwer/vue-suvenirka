@@ -6,7 +6,7 @@
       <input type="text" name="name" id="name" value="" min="3" max="255" placeholder="Название продукта" required>
 
       <label for="description">Описание продукта: </label>
-      <input type="textarea" id="description" name="description" placeholder="Описание продукта" max="500" required>
+      <textarea id="description" name="description" placeholder="Описание продукта" max="500" required/>
 
       <label for="category">Категория: </label>
       <input type="text" id="category" name="category" placeholder="Категория продукта" min="3" max="500" required>
@@ -34,15 +34,16 @@
 
       <div class="additional-properties" id="additional-properties">
         <label>Дополнительные характеристики:</label>
-        <div v-for="(property, index) in additionalProperties" :key="index">
-          <input type="text" v-model="property.name" placeholder="Название характеристики" required>
-          <input type="text" v-model="property.value" placeholder="Значение характеристики" required>
+        <div v-for="(property, index) in additionalProperties" :key="index" style="margin-bottom: 12px;">
+          <input type="text" v-model="property.name" placeholder="Название характеристики" >
+          <input type="text" v-model="property.value" placeholder="Значение характеристики" >
           <button class="remove" type="button" @click="removeProperty(index)">Удалить</button>
+          <hr>
         </div>
         <button class="add" type="button" @click="addProperty">Добавить характеристику</button>
       </div>
 
-      <label for="images">Image:</label>
+      <label for="images">Изображение:</label>
       <input type="file" id="images" name="images" accept="images/*" required>
 
       <button type="submit">Сохранить продукт</button>
@@ -54,6 +55,7 @@
 import { onMounted, ref } from 'vue';
 import apiService from '@/services/apiService';
 import VueCookies from 'vue-cookies';
+import toast from 'vue3-toastify';
 
 const myForm = ref(null);
 const additionalProperties = ref([{ name: '', value: '' }]);
@@ -102,11 +104,10 @@ const handleSubmit = (event) => {
       console.log('Success:', response.data);
       myForm.value.reset(); // Очистка формы
       additionalProperties.value = [{ name: '', value: '' }]; // Очистка дополнительных характеристик
-      alert('Продукт успешно добавлен');
+      toast.success('Продукт успешно создан', { autoClose: 2000 });
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('Произошла ошибка при добавлении продукта');
     });
 };
 
@@ -187,7 +188,7 @@ input[type="textarea"],
 input[type="number"],
 select,
 input[type="file"] {
-  width: calc(100% - 22px);
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;

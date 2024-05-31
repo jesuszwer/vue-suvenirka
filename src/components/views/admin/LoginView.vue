@@ -14,7 +14,7 @@
 
 <script>
 import { ref } from 'vue';
-import axios from 'axios';
+import apiService from '@/services/apiService';
 import vuecookies from 'vue-cookies';
 
 export default {
@@ -25,7 +25,7 @@ export default {
 
     const login = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/api/admin/login', {
+        const response = await apiService.post('/api/admin/login', {
           username: username.value,
           password: password.value
         });
@@ -38,7 +38,7 @@ export default {
         }
       } catch (error) {
         console.error('Ошибка:', error);
-        message.value = 'Произошла ошибка при попытке входа';
+        message.value = 'Неверное имя пользователя или пароль';
       }
     };
 

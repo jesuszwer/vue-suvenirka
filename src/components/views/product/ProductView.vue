@@ -52,6 +52,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import apiService from '@/services/apiService';
+import { toast } from 'vue3-toastify';
 
 const product = ref({});
 
@@ -85,6 +86,7 @@ const addToCart = () => {
       cart.value.push({ ...product.value, quantity: 1 });
     }
     localStorage.setItem('cart', JSON.stringify(cart.value));
+    toast.success('Товар добавлен в корзину');
   }
 };
 

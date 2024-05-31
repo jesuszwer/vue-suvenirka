@@ -17,7 +17,7 @@
           <input type="text" id="name" name="name" required>
 
           <label for="phone">Телефон</label>
-          <input type="tel" id="phone" name="phone" placeholder="+7 999 99 99 999" required>
+          <input type="tel" id="phone" name="phone" placeholder="+7 999 99 99 999" pattern="\+7\d{10}" required>
 
           <div class="delivery-options">
             <label>
@@ -49,8 +49,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
 import CartCard from '@/components/product/CartCard.vue';
+import apiService from '@/services/apiService';
+import { toast } from 'vue3-toastify';
 
 const cart = ref([]);
 
@@ -94,12 +95,17 @@ const handleSubmit = () => {
 
   // Отправка данных на сервер с использованием axios
   // TODO исправить на деплое
-  axios.post('http://localhost:3000/api/telegram', dataToSend) // замените на ваш URL
+  apiService.post('/api/telegram', dataToSend) // замените на ваш URL
     .then(response => {
       console.log('Success:', response.data);
+      console.log('Success:', dataToSend);
+      toast.success('Заказ оформлен! Наш менеджер свяжется с вами в ближайшее время.');
+      cart.value = [];
+      localStorage.setItem('cart', JSON.stringify(cart.value));
     })
     .catch(error => {
       console.error('Error:', error);
+      toast.error('Ой..что-то пошло не так. Свяжитесь с нами, и расскажите об этом.');
     });
 }
 

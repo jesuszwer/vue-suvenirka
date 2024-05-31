@@ -5,6 +5,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import VueCookies from 'vue-cookies';
+import toast from 'vue3-toastify';
 
 import apiService from '@/services/apiService';
 
@@ -12,9 +14,13 @@ const id = useRoute().params.id;
 
 onMounted(async () => {
   try {
+    if (!VueCookies.get('token')) {
+      toast.error('Вы не авторизованы');
+      window.location.href = '/';
+    }
     const response = await apiService.delete('/api/product/' + id);
     console.log(response.data);
-    alert('Товар удален');
+    toast.success("Товар был удален");
     window.location.href = '/';
   } catch (error) {
     console.error(error);

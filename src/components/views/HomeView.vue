@@ -11,7 +11,7 @@
           :price="product.price" :oldprice="product.oldprice" :images="product.images" @add-to-cart="addToCart" />
       </template>
       <template v-else>
-        <p>Товаров нет</p>
+        <p class="none">Товаров нет</p>
       </template>
     </div>
   </section>
@@ -24,19 +24,18 @@
           :images="category.image" />
       </template>
       <template v-else>
-        <p>Категорий нет</p>
+        <p class="none">Категорий нет</p>
       </template>
     </div>
 
   </section>
-
-
 </template>
 
 <script setup>
 import CategoryCard from '@/components/product/CategoryCard.vue';
 import ProductCard from '@/components/product/ProductCard.vue';
 import { ref, onMounted } from 'vue';
+import { toast } from 'vue3-toastify';
 
 import apiService from '@/services/apiService';
 
@@ -77,6 +76,7 @@ const addToCart = (productId) => {
       cart.value.push({ ...product, quantity: 1 });
     }
     localStorage.setItem('cart', JSON.stringify(cart.value));
+    toast.success('Товар добавлен в корзину');
   }
 };
 
@@ -111,6 +111,13 @@ const addToCart = (productId) => {
 </script>
 
 <style scoped>
+.none {
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
 .banner {
   display: flex;
   justify-content: center;
